@@ -18,8 +18,12 @@ if (len(sys.argv) <= 1):
   print('err: resource file path without specifying')
   exit(1)
 elif (len(sys.argv) <= 2):
-  print('err: destination path without especifying')
-  exit(1)
+  if(sys.argv[1] == '-h' or sys.argv[1] == '--help'):
+    print("Usage: python[VERSION] [path]/xls_to_csv_script.py [xls file path] [destination directory path]")
+    exit(0)
+  else:
+    print('err: destination path without especifying')
+    exit(1)
 else:
   # Confirming paths
   if (not os.path.exists(sys.argv[1]) or not os.path.isfile(sys.argv[1])):
