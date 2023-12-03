@@ -20,12 +20,12 @@ REQUIRE x.agenteCod IS UNIQUE;
 
 // Creating Poliza nodes
 LOAD CSV WITH HEADERS
-FROM 'https://...' AS row
+FROM 'file:///CONTRATOS.csv' AS row
 MERGE (p:Poliza {polizaId: toInteger(row.ID_POLIZA)});
 
 // Creating Contrato nodes
 LOAD CSV WITH HEADERS
-FROM 'https://...' as row
+FROM 'file:///CONTRATOS.csv' as row
 CREATE (c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})
 SET
 c.danyosPropios = row.DANYOS_PROPIOS,
@@ -37,12 +37,12 @@ c.dapFranquicia = toFloat(row.DAP_FRANQUICIA);
 
 // Creating Agente nodes
 LOAD CSV WITH HEADERS
-FROM 'https://...' AS row
+FROM 'file:///CONTRATOS.csv' AS row
 MERGE (a:Agente {agenteCod: toInteger(row.COD_AGENTE)});
 
 // Creating relationships
 LOAD CSV WITH HEADERS
-FROM 'https://...' AS row
+FROM 'file:///CONTRATOS.csv' AS row
 MATCH (p:Poliza {polizaId: toInteger(row.ID_POLIZA)})
 MATCH (a:Agente {agenteCod: toInteger(row.COD_AGENTE)})
 MERGE (p)-[:POSEE]->(c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})
