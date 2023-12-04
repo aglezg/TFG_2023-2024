@@ -36,5 +36,5 @@ SET
 LOAD CSV WITH HEADERS
 FROM 'file:///CONTRATOS_PERSONAS_simplified.csv' AS row
 MATCH (i:Interviente {intervinienteId: toInteger(row.ID_INTERVINIENTE)})
-MATCH (c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})<-[:POSEE]-(p:Poliza {polizaId: toInteger(row.ID_POLIZA)})
+MATCH (p:Poliza {polizaId: toInteger(row.ID_POLIZA)})-[:POSEE]->(c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})
 CREATE (i)-[:INTERVIENE_EN {rol: row.ROL}]->(c);
