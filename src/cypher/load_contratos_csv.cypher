@@ -33,7 +33,7 @@ LOAD CSV WITH HEADERS
 FROM 'file:///CONTRATOS.csv' as row
 MATCH (p:Poliza {polizaId: toInteger(row.ID_POLIZA)})
 MATCH (a:Agente {agenteCod: toInteger(row.COD_AGENTE)})
-CREATE (p)-[:CONTIENE]->(c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})<-[:INTERVIENE_EN]-(a)
+MERGE (p)-[:CONTIENE]->(c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})<-[:INTERVIENE_EN]-(a)
 SET
     c.danyosPropios = row.DANYOS_PROPIOS,
     c.perdidaTotal = row.PERDIDA_TOTAL,
