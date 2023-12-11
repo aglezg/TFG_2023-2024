@@ -8,7 +8,7 @@ DROP CONSTRAINT Interviniente_id IF EXISTS;
 
 // Creating constraint "Interviniente_id"
 CREATE CONSTRAINT Interviniente_id IF NOT EXISTS
-FOR (x:Persona:Interviniente)
+FOR (x:Interviniente)
 REQUIRE x.intervinienteId IS UNIQUE;
 
 // Creating "Interviniente" nodes
@@ -42,6 +42,6 @@ SET r.nombreRol = row.ROL;
 // Creating relationships
 LOAD CSV WITH HEADERS
 FROM 'file:///CONTRATOS_PERSONAS_simplified.csv' AS row
-MATCH (p:Poliza {polizaId: toInteger(row.ID_POLIZA)})-[:POSEE]->(c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})
+MATCH (p:Poliza {polizaId: toInteger(row.ID_POLIZA)})-[:CONTIENE]->(c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})
 MATCH (i:Persona:Interviniente {intervinienteId: toInteger(row.ID_INTERVINIENTE)})-[:TIENE_ROL]->(r:Rol {rolCod: row.COD_ROL})
 MERGE (r)-[:INTERVIENE_EN]->(c);
