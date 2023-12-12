@@ -9,12 +9,12 @@ DROP CONSTRAINT Interviniente_id IF EXISTS;
 // Creating constraint "Interviniente_id"
 CREATE CONSTRAINT Interviniente_id IF NOT EXISTS
 FOR (x:Interviniente)
-REQUIRE x.intervinienteId IS UNIQUE;
+REQUIRE x.id IS UNIQUE;
 
 // Creating "Interviniente" nodes
 LOAD CSV WITH HEADERS
 FROM 'file:///CONTRATOS_PERSONAS_simplified.csv' AS row
-MERGE (i:Persona:Interviniente {intervinienteId: toInteger(row.ID_INTERVINIENTE)})
+MERGE (i:Persona:Interviniente {id: toInteger(row.ID_INTERVINIENTE)})
 SET
     i.nombre = row.NOMBRE,
     i.apellido1 = row.APELLIDO1,
@@ -35,13 +35,13 @@ SET
 // Creating "Rol" nodes
 LOAD CSV WITH HEADERS
 FROM 'file:///CONTRATOS_PERSONAS_simplified.csv' AS row
-MATCH (i:Persona:Interviniente {intervinienteId: toInteger(row.ID_INTERVINIENTE)})
-MERGE (i)-[:TIENE_ROL]->(r:Rol {rolCod: row.COD_ROL})
-SET r.nombreRol = row.ROL;
+MATCH (i:Persona:Interviniente {id: toInteger(row.ID_INTERVINIENTE)})
+MERGE (i)-[:TIENE_ROL]->(r:Rol {codigo: row.COD_ROL})
+SET r.nombre = row.ROL;
 
 // Creating relationships
 LOAD CSV WITH HEADERS
 FROM 'file:///CONTRATOS_PERSONAS_simplified.csv' AS row
-MATCH (p:Poliza {polizaId: toInteger(row.ID_POLIZA)})-[:CONTIENE]->(c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})
-MATCH (i:Persona:Interviniente {intervinienteId: toInteger(row.ID_INTERVINIENTE)})-[:TIENE_ROL]->(r:Rol {rolCod: row.COD_ROL})
+MATCH (p:Poliza {id: toInteger(row.ID_POLIZA)})-[:CONTIENE]->(c:Contrato {id: toInteger(row.ID_CONTRATO)})
+MATCH (i:Persona:Interviniente {id: toInteger(row.ID_INTERVINIENTE)})-[:TIENE_ROL]->(r:Rol {codigo: row.COD_ROL})
 MERGE (r)-[:INTERVIENE_EN]->(c);
