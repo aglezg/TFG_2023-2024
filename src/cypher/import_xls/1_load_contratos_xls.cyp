@@ -52,7 +52,7 @@ CALL apoc.load.xls(
 WHERE row.ID_CONTRATO IS NOT NULL
 MATCH (p:Poliza {idPoliza: toInteger(row.ID_POLIZA)})
 MATCH (a:Agente {codAgente: toInteger(row.COD_AGENTE)})
-MERGE (p)-[:CONTIENE]->(c:Contrato {contratoId: toInteger(row.ID_CONTRATO)})<-[:INTERVIENE_EN]-(a)
+MERGE (p)-[:CONTIENE]->(c:Contrato {idContrato: toInteger(row.ID_CONTRATO)})<-[:INTERVIENE_EN]-(a)
 SET
     c.danyosPropios = row.DANYOS_PROPIOS,
     c.perdidaTotal = row.PERDIDA_TOTAL,
