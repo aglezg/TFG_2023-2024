@@ -1,13 +1,13 @@
 // Load CONTRATOS.xlsx
 
 // Remove nodes
-MATCH (p:Poliza) DETACH DELETE p;
-MATCH (c:Contrato) DETACH DELETE c;
-MATCH (a:Agente) DETACH DELETE a;
+// MATCH (p:Poliza) DETACH DELETE p;
+// MATCH (c:Contrato) DETACH DELETE c;
+// MATCH (a:Agente) DETACH DELETE a;
 
 // Remove constraints
-DROP CONSTRAINT Poliza_idPoliza IF EXISTS;
-DROP CONSTRAINT Agente_codAgente IF EXISTS;
+// DROP CONSTRAINT Poliza_idPoliza IF EXISTS;
+// DROP CONSTRAINT Agente_codAgente IF EXISTS;
 
 // Create Poliza constraints
 CREATE CONSTRAINT Poliza_idPoliza IF NOT EXISTS
