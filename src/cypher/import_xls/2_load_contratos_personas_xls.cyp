@@ -3,11 +3,11 @@
 // Remove nodes
 // MATCH (p:Poliza) DETACH DELETE p;
 // MATCH (c:Contrato) DETACH DELETE c;
-// MATCH (i:Persona:Interviniente) DETACH DELETE i;
+MATCH (i:Persona:Interviniente) DETACH DELETE i;
 
 // Remove constraints
 // DROP CONSTRAINT Poliza_idPoliza IF EXISTS;
-// DROP CONSTRAINT Interviniente_idInterviniente IF EXISTS;
+DROP CONSTRAINT Interviniente_idInterviniente IF EXISTS;
 
 // Create Poliza constraints
 CREATE CONSTRAINT Poliza_idPoliza IF NOT EXISTS
