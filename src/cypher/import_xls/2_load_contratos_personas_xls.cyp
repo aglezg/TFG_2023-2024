@@ -1,12 +1,9 @@
-// Load CONTRATOS_PERSONAS.xlsx
+// Load CONTRATOS_PERSONAS(simplificado).xlsx
 
 // Remove nodes
-// MATCH (p:Poliza) DETACH DELETE p;
-// MATCH (c:Contrato) DETACH DELETE c;
 MATCH (i:Persona:Interviniente) DETACH DELETE i;
 
 // Remove constraints
-// DROP CONSTRAINT Poliza_idPoliza IF EXISTS;
 DROP CONSTRAINT Interviniente_idInterviniente IF EXISTS;
 
 // Create Poliza constraints
@@ -16,7 +13,7 @@ REQUIRE p.idPoliza IS UNIQUE;
 
 // Create Poliza nodes
 CALL apoc.load.xls(
-    'file:///CONTRATOS_PERSONAS.xlsx',
+    'file:///CONTRATOS_PERSONAS(simplificado).xlsx',
     'Hoja1',
     {
         header: true
@@ -27,7 +24,7 @@ MERGE (p:Poliza {idPoliza: toInteger(row.ID_POLIZA)});
 
 // Create Contrato nodes and relationship (Poliza -> Contrato)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_PERSONAS.xlsx',
+    'file:///CONTRATOS_PERSONAS(simplificado).xlsx',
     'Hoja1',
     {
         header: true
@@ -44,7 +41,7 @@ REQUIRE i.idInterviniente IS UNIQUE;
 
 // Create Persona:Interviniente nodes
 CALL apoc.load.xls(
-    'file:///CONTRATOS_PERSONAS.xlsx',
+    'file:///CONTRATOS_PERSONAS(simplificado).xlsx',
     'Hoja1',
     {
         header: true
@@ -61,8 +58,8 @@ SET
 //    i.municipio = row.MUNICIPIO,
 //    i.provincia = row.PROVINCIA,
 //    i.codPostal = toInteger(row.COD_POSTAL),
-    i.fchCarnet = datetime(row.FCH_CARNET),
-    i.fchNacimiento = datetime(row.FCH_NACIMIENTO),
+    i.fchCarnet = date(row.FCH_CARNET),
+    i.fchNacimiento = date(row.FCH_NACIMIENTO),
     i.sexo = row.SEXO,
     i.telefono1 = row.TELEFONO1,
     i.telefono2 = row.TELEFONO2,
@@ -72,7 +69,7 @@ SET
 
 // Create Rol nodes
 CALL apoc.load.xls(
-    'file:///CONTRATOS_PERSONAS.xlsx',
+    'file:///CONTRATOS_PERSONAS(simplificado).xlsx',
     'Hoja1',
     {
         header: true
@@ -86,12 +83,12 @@ SET
 
 // Create relationships (Rol -> Contrato)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_PERSONAS.xlsx',
+    'file:///CONTRATOS_PERSONAS(simplificado).xlsx',
     'Hoja1',
     {
         header: true
     }
 ) YIELD map as row
-MATCH (p:Poliza {idPoliza: toInteger(row.ID_POLIZA)})-[:CONTIENE]->(c:Contrato {idContrato})
+MATCH (p:Poliza {idPoliza: toInteger(row.ID_POLIZA)})-[:CONTIENE]->(c:Contrato {idContrato: toInteger(row.ID_CONTRATO)})
 MATCH (i:Persona:Interviniente {idInterviniente: toInteger(row.ID_INTERVINIENTE)})-[:TIENE_ROL]->(r:Rol {codRol: row.COD_ROL})
 MERGE (r)-[:INTERVIENE_EN]->(c);
