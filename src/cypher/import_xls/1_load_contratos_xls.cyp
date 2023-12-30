@@ -23,7 +23,7 @@ CALL apoc.load.xls(
     }
 ) YIELD map as row
 WHERE row.ID_POLIZA IS NOT NULL
-MERGE (p:Poliza {idPoliza: toInteger(row.ID_POLIZA)});
+MERGE (p:Poliza {idPoliza: row.ID_POLIZA}); //ON CREATE SET p.integerIdPoliza = CASE WHEN toInteger(row.ID_POLIZA) IS NOT NULL THEN true ELSE false END;
 
 // Create Agente constraints
 CREATE CONSTRAINT Agente_codAgente IF NOT EXISTS
@@ -41,7 +41,7 @@ CALL apoc.load.xls(
 WHERE row.COD_AGENTE IS NOT NULL
 MERGE (a:Agente {codAgente: toInteger(row.COD_AGENTE)});
 
-// Create Contrato nodes and relationships: Poliza -> Contrato, Agente -> Contrato
+// Create Contrato nodes and relationship (Poliza -> Contrato)
 CALL apoc.load.xls(
     'file:///CONTRATOS.xlsx',
     'Hoja1',
@@ -49,11 +49,11 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.ID_CONTRATO IS NOT NULL
-MATCH (p:Poliza {idPoliza: toInteger(row.ID_POLIZA)})
-MATCH (a:Agente {codAgente: toInteger(row.COD_AGENTE)})
-MERGE (p)-[:CONTIENE]->(c:Contrato {idContrato: toInteger(row.ID_CONTRATO)})<-[:INTERVIENE_EN]-(a)
-SET
+WHERE row.ID_POLIZA IS NOT NULL AND row.ID_CONTRATO IS NOT NULL
+MATCH (p:Poliza {idPoliza: row.ID_POLIZA})
+MERGE (p)-[:CONTIENE]->(c:Contrato {idContrato: row.ID_CONTRATO})
+ON CREATE SET
+    // c.integerIdContrato = CASE WHEN toInteger(row.ID_CONTRATO) IS NOT NULL THEN true ELSE false END,
     c.danyosPropios = row.DANYOS_PROPIOS,
     c.perdidaTotal = row.PERDIDA_TOTAL,
     c.lunas = row.LUNAS,
