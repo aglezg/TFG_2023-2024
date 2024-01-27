@@ -19,20 +19,8 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.ID_POLIZA IS NOT NULL
-MERGE (p:Poliza {idPoliza: row.ID_POLIZA}); //ON CREATE SET p.integerIdPoliza = CASE WHEN toInteger(row.ID_POLIZA) IS NOT NULL THEN true ELSE false END;
-
-// Create Contrato nodes and relationship (Poliza -> Contrato)
-CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS.xlsx',
-    'Hoja1',
-    {
-        header: true
-    }
-) YIELD map as row
-WHERE row.ID_POLIZA IS NOT NULL AND row.ID_CONTRATO IS NOT NULL
-MATCH (p:Poliza {idPoliza: row.ID_POLIZA})
-MERGE (p)-[:CONTIENE]->(c:Contrato {idContrato: row.ID_CONTRATO}); // ON CREATE SET c.integerIdContrato = CASE WHEN toInteger(row.ID_CONTRATO) IS NOT NULL THEN true ELSE false END;
+WHERE row.ID_POLIZA IS NOT NULL             // Error: Hay polizas nulas
+MERGE (p:Poliza {idPoliza: row.ID_POLIZA}); // toInteger(row.ID_POLIZA)
 
 // Create Siniestro constraints
 CREATE CONSTRAINT Siniestro_idSiniestro IF NOT EXISTS
@@ -47,8 +35,8 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.ID_SINIESTRO IS NOT NULL
-MERGE (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
+WHERE row.ID_SINIESTRO IS NOT NULL                  // Error: Hay siniestros nulos
+MERGE (s:Siniestro {idSiniestro: row.ID_SINIESTRO}) // toInteger(row.ID_SINIESTRO)
 ON CREATE SET
     s.fchOcurrencia = row.FCH_OCURRENCIA, // date(row.FCH_OCURRENCIA) error
     s.horaOcurrencia = row.HORA_OCURRENCIA, // TIME(row.HORA_OCURRENCIA)
@@ -72,7 +60,7 @@ ON CREATE SET
     s.indFraudeConfirmado = row.IND_FRAUDE_CONFIRMADO, // toBoolean(row.IND_FRAUDE_CONFIRMADO)
     s.indAsistenciaViaje = row.IND_ASISTENCIA_VIAJE;
 
-// Create relationships (Contrato -> Siniestro)
+// Create relationships (Poliza -> Siniestro)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS.xlsx',
     'Hoja1',
@@ -80,7 +68,6 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.ID_POLIZA IS NOT NULL AND row.ID_CONTRATO IS NOT NULL AND row.ID_SINIESTRO IS NOT NULL
-MATCH (p:Poliza {idPoliza: row.ID_POLIZA})-[:CONTIENE]->(c:Contrato {idContrato: row.ID_CONTRATO})
-MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
-MERGE (c)-[:TIENE_ASOCIADO]->(s);
+MATCH (p:Poliza {idPoliza: row.ID_POLIZA})          // toInteger(row.ID_POLIZA)
+MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO}) // toInteger(row.ID_SINIESTRO)
+MERGE (p)-[:TIENE_SINIESTRO]->(s);
