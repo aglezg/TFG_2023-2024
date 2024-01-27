@@ -6,22 +6,6 @@ MATCH (s:Siniestro) DETACH DELETE s;
 // Remove constraints
 DROP CONSTRAINT Siniestro_idSiniestro IF EXISTS;
 
-// Create Poliza constraints
-CREATE CONSTRAINT Poliza_idPoliza IF NOT EXISTS
-FOR (p:Poliza)
-REQUIRE p.idPoliza IS UNIQUE;
-
-// Create Poliza nodes
-CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS.xlsx',
-    'Hoja1',
-    {
-        header: true
-    }
-) YIELD map as row
-WHERE row.ID_POLIZA IS NOT NULL             // Error: Hay polizas nulas
-MERGE (p:Poliza {idPoliza: row.ID_POLIZA}); // toInteger(row.ID_POLIZA)
-
 // Create Siniestro constraints
 CREATE CONSTRAINT Siniestro_idSiniestro IF NOT EXISTS
 FOR (s:Siniestro)
