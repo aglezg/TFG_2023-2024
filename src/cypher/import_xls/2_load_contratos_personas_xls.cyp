@@ -13,7 +13,8 @@ REQUIRE p.idPersona IS UNIQUE;
 
 // Create Persona nodes
 CALL apoc.load.xls(
-    'file:///CONSTRATOS_PERSONAS.xlsx', // Puede que haya que usar la version simplificada
+    'file:///CONTRATOS_PERSONAS(simplificado).xlsx', // Version simplificada
+    'Hoja1',
     {
         header: true
     }
@@ -27,8 +28,8 @@ ON CREATE SET
     // p.municipio = row.MUNICIPIO,
     // p.provincia = row.PROVINCIA,
     // p.codPostal = row.COD_POSTAL,
-    p.fchCarnet = row.FCH_CARNET,
-    p.fchNacimiento = row.FCH_NACIMIENTO,
+    p.fchCarnet = row.FCH_CARNET,         // date
+    p.fchNacimiento = row.FCH_NACIMIENTO, // date
     p.sexo = row.SEXO,
     p.telefono1 = row.TELEFONO1,
     p.telefono2 = row.TELEFONO2,
