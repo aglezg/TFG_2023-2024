@@ -22,9 +22,9 @@ CALL apoc.load.xls(
 WHERE row.ID_SINIESTRO IS NOT NULL                  // Error: Hay siniestros nulos
 MERGE (s:Siniestro {idSiniestro: row.ID_SINIESTRO}) // toInteger(row.ID_SINIESTRO)
 ON CREATE SET
-    s.fchOcurrencia = row.FCH_OCURRENCIA, // date(row.FCH_OCURRENCIA) error
-    s.horaOcurrencia = row.HORA_OCURRENCIA, // TIME(row.HORA_OCURRENCIA)
-    s.fchDeclaracion = row.FCH_DECLARACION, // date(row.FCH_DECLARACION)
+    s.fchOcurrencia = row.FCH_OCURRENCIA,               // date(row.FCH_OCURRENCIA) error
+    s.horaOcurrencia = row.HORA_OCURRENCIA,             // TIME(row.HORA_OCURRENCIA)
+    s.fchDeclaracion = row.FCH_DECLARACION,             // date(row.FCH_DECLARACION)
     s.responsabilidadCivil = row.RESPONSABILIDAD_CIVIL,
     s.robo = row.ROBO,
     s.incendio = row.INCENDIO,
@@ -40,8 +40,8 @@ ON CREATE SET
     // numero = row.NUMERO,
     // entidad = row.ENTIDAD,
     // municipio = row.MUNICIPIO,
-    s.indIndicioFraude = row.IND_INDICIO_FRAUDE, // toBoolean(row.IND_INDICIO_FRAUDE)
-    s.indFraudeConfirmado = row.IND_FRAUDE_CONFIRMADO, // toBoolean(row.IND_FRAUDE_CONFIRMADO)
+    s.indIndicioFraude = row.IND_INDICIO_FRAUDE,        // toBoolean(row.IND_INDICIO_FRAUDE)
+    s.indFraudeConfirmado = row.IND_FRAUDE_CONFIRMADO,  // toBoolean(row.IND_FRAUDE_CONFIRMADO)
     s.indAsistenciaViaje = row.IND_ASISTENCIA_VIAJE;
 
 // Create relationships (Poliza -> Siniestro)
