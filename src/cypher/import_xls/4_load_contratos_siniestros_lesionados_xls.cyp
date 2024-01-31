@@ -158,3 +158,81 @@ MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
 MERGE (p)-[r:ES_PEATON_EN]->(s);
 
+// Create relationships [INTERVIENE_EN_SINIESTRO] [(1) => NOMBRE, APELLIDO1, APELLIDO2]
+CALL apoc.load.xls(
+    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'Hoja1',
+    {
+        header: true
+    }
+) YIELD map as row
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL
+AND (row.ROL = "OCUP. V/A" OR row.ROL = "CTOR. V/A" OR row.ROL = "OCUP. V/C" OR row.ROL = "CTOR. V/C")  // AND row.SINIESTRO IS NOT NULL
+MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
+MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
+MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
+SET r.matriculaVehiculo = CASE WHEN row.VEHICULO_VIAJA IS NOT NULL THEN row.VEHICULO_VIAJA ELSE r.matriculaVehiculo END;
+
+// Create relationships [INTERVIENE_EN_SINIESTRO] [(2) => NOMBRE, APELLIDO1]
+CALL apoc.load.xls(
+    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'Hoja1',
+    {
+        header: true
+    }
+) YIELD map as row
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NULL AND row.ROL = "PEATON" // AND row.SINIESTRO IS NOT NULL
+MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
+MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
+MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
+SET r.matriculaVehiculo = CASE WHEN row.VEHICULO_VIAJA IS NOT NULL THEN row.VEHICULO_VIAJA ELSE r.matriculaVehiculo END;
+
+// Create relationships [INTERVIENE_EN_SINIESTRO] [(3) => NOMBRE]
+CALL apoc.load.xls(
+    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'Hoja1',
+    {
+        header: true
+    }
+) YIELD map as row
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NULL AND row.APELLIDO2 IS NULL AND row.ROL = "PEATON" // AND row.SINIESTRO IS NOT NULL
+MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
+MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
+MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
+SET r.matriculaVehiculo = CASE WHEN row.VEHICULO_VIAJA IS NOT NULL THEN row.VEHICULO_VIAJA ELSE r.matriculaVehiculo END;
+
+// Create relationships [CONDUCE_VA_EN, CONDUCE_VC_EN, VIAJA_EN_VA_EN, VIAJA_EN_VC_EN]
+MATCH (p:Persona)-[r:INTERVIENE_EN_SINIESTRO]->(s:Siniestro)
+WHERE r.rol = "CTOR. V/A"
+MERGE (p)-[r2:CONDUCE_VA_EN]->(s)
+SET r2.matriculaVehiculo = CASE WHEN r.matriculaVehiculo IS NOT NULL THEN r.matriculaVehiculo ELSE NULL END
+DELETE r;
+
+MATCH (p:Persona)-[r:INTERVIENE_EN_SINIESTRO]->(s:Siniestro)
+WHERE r.rol = "CTOR. V/C"
+MERGE (p)-[r2:CONDUCE_VC_EN]->(s)
+SET r2.matriculaVehiculo = CASE WHEN r.matriculaVehiculo IS NOT NULL THEN r.matriculaVehiculo ELSE NULL END
+DELETE r;
+
+MATCH (p:Persona)-[r:INTERVIENE_EN_SINIESTRO]->(s:Siniestro)
+WHERE r.rol = "OCUP. V/A"
+MERGE (p)-[r2:VIAJA_EN_VA_EN]->(s)
+SET r2.matriculaVehiculo = CASE WHEN r.matriculaVehiculo IS NOT NULL THEN r.matriculaVehiculo ELSE NULL END
+DELETE r;
+
+MATCH (p:Persona)-[r:INTERVIENE_EN_SINIESTRO]->(s:Siniestro)
+WHERE r.rol = "OCUP. V/C"
+MERGE (p)-[r2:VIAJA_EN_VC_EN]->(s)
+SET r2.matriculaVehiculo = CASE WHEN r.matriculaVehiculo IS NOT NULL THEN r.matriculaVehiculo ELSE NULL END
+DELETE r;
+
+// Create relationships (vehiculo)-[INTERVIENE_COMO_ASEGURADO/CONTRARIO_EN]->(siniestro)
+MATCH (p:Persona)-[r:CONDUCE_VA_EN|VIAJA_EN_VA_EN]->(s:Siniestro)
+MATCH (v:Vehiculo)
+WHERE r.matriculaVehiculo = v.matriculaVehiculo
+MERGE (v)-[:INTERVIENE_COMO_ASEGURADO_EN]->(s);
+
+MATCH (p:Persona)-[r:CONDUCE_VC_EN|VIAJA_EN_VC_EN]->(s:Siniestro)
+MATCH (v:Vehiculo)
+WHERE r.matriculaVehiculo = v.matriculaVehiculo
+MERGE (v)-[:INTERVIENE_COMO_CONTRARIO_EN]->(s);
