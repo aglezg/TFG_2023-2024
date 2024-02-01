@@ -39,6 +39,12 @@ SET
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
     p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
+    // viaPublica
+    // numero
+    // piso
+    // municipio
+    // provincia
+    // codigoPostal
 
 // Create Persona nodes [(2) => NOMBRE, APELLIDO1]
 CALL apoc.load.xls(
@@ -57,6 +63,12 @@ SET
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
     p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
+    // viaPublica
+    // numero
+    // piso
+    // municipio
+    // provincia
+    // codigoPostal
 
 // Create Persona nodes [(3) => NOMBRE]
 CALL apoc.load.xls(
@@ -75,6 +87,12 @@ SET
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
     p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
+    // viaPublica
+    // numero
+    // piso
+    // municipio
+    // provincia
+    // codigoPostal
 
 // Create relationships [ES_LESIONADA_EN] [(1) => NOMBRE, APELLIDO1, APELLIDO2]
 CALL apoc.load.xls(
@@ -181,7 +199,8 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NULL AND row.ROL = "PEATON" // AND row.SINIESTRO IS NOT NULL
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NULL
+AND (row.ROL = "OCUP. V/A" OR row.ROL = "CTOR. V/A" OR row.ROL = "OCUP. V/C" OR row.ROL = "CTOR. V/C")  // AND row.SINIESTRO IS NOT NULL
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
 MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
@@ -195,7 +214,8 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NULL AND row.APELLIDO2 IS NULL AND row.ROL = "PEATON" // AND row.SINIESTRO IS NOT NULL
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NULL AND row.APELLIDO2 IS NULL
+AND (row.ROL = "OCUP. V/A" OR row.ROL = "CTOR. V/A" OR row.ROL = "OCUP. V/C" OR row.ROL = "CTOR. V/C")  // AND row.SINIESTRO IS NOT NULL
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
 MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
