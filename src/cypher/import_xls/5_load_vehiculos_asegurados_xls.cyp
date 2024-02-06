@@ -22,7 +22,7 @@ CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
     {
-        header: true,
+        header: true
     }
 ) YIELD map as row
 WHERE row.CTOR_NOMBRE IS NOT NULL AND row.CTOR_APELLIDO1 IS NOT NULL AND row.CTOR_APELLIDO2 IS NOT NULL
@@ -49,7 +49,7 @@ CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
     {
-        header: true,
+        header: true
     }
 ) YIELD map as row
 WHERE row.CTOR_NOMBRE IS NOT NULL AND row.CTOR_APELLIDO1 IS NOT NULL AND row.CTOR_APELLIDO2 IS NULL
@@ -76,7 +76,7 @@ CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
     {
-        header: true,
+        header: true
     }
 ) YIELD map as row
 WHERE row.CTOR_NOMBRE IS NOT NULL AND row.CTOR_APELLIDO1 IS NULL AND row.CTOR_APELLIDO2 IS NULL
@@ -103,7 +103,7 @@ CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
     {
-        header: true,
+        header: true
     }
 ) YIELD map as row
 WHERE row.MATRICULA IS NOT NULL AND row.ID_SINIESTRO IS NOT NULL
@@ -117,7 +117,7 @@ CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
     {
-        header: true,
+        header: true
     }
 ) YIELD map as row
 WHERE row.CTOR_NOMBRE IS NOT NULL AND row.CTOR_APELLIDO1 IS NOT NULL AND row.CTOR_APELLIDO2 IS NOT NULL AND row.ID_SINIESTRO IS NOT NULL
@@ -131,7 +131,7 @@ CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
     {
-        header: true,
+        header: true
     }
 ) YIELD map as row
 WHERE row.CTOR_NOMBRE IS NOT NULL AND row.CTOR_APELLIDO1 IS NOT NULL AND row.CTOR_APELLIDO2 IS NULL AND row.ID_SINIESTRO IS NOT NULL
@@ -145,7 +145,7 @@ CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
     {
-        header: true,
+        header: true
     }
 ) YIELD map as row
 WHERE row.CTOR_NOMBRE IS NOT NULL AND row.CTOR_APELLIDO1 IS NULL AND row.CTOR_APELLIDO2 IS NULL AND row.ID_SINIESTRO IS NOT NULL
