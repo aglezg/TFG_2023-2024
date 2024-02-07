@@ -39,12 +39,12 @@ SET
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
     p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
-    // viaPublica
-    // numero
-    // piso
-    // municipio
-    // provincia
-    // codigoPostal
+    p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
+    p.numero = row.NUMERO,              // Referencia a lugar
+    p.piso = row.PISO,                  // Referencia a lugar
+    p.municipio = row.MUNICIPIO,        // Referencia a lugar
+    p.provincia = row.PROVINCIA,        // Referencia a lugar
+    p.codigoPostal = row.CODIGO_POSTAL; // Referencia a lugar
 
 // Create Persona nodes [(2) => NOMBRE, APELLIDO1]
 CALL apoc.load.xls(
@@ -63,12 +63,12 @@ SET
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
     p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
-    // viaPublica
-    // numero
-    // piso
-    // municipio
-    // provincia
-    // codigoPostal
+    p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
+    p.numero = row.NUMERO,              // Referencia a lugar
+    p.piso = row.PISO,                  // Referencia a lugar
+    p.municipio = row.MUNICIPIO,        // Referencia a lugar
+    p.provincia = row.PROVINCIA,        // Referencia a lugar
+    p.codigoPostal = row.CODIGO_POSTAL; // Referencia a lugar
 
 // Create Persona nodes [(3) => NOMBRE]
 CALL apoc.load.xls(
@@ -87,12 +87,12 @@ SET
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
     p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
-    // viaPublica
-    // numero
-    // piso
-    // municipio
-    // provincia
-    // codigoPostal
+    p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
+    p.numero = row.NUMERO,              // Referencia a lugar
+    p.piso = row.PISO,                  // Referencia a lugar
+    p.municipio = row.MUNICIPIO,        // Referencia a lugar
+    p.provincia = row.PROVINCIA,        // Referencia a lugar
+    p.codigoPostal = row.CODIGO_POSTAL; // Referencia a lugar
 
 // Create relationships [ES_LESIONADA_EN] [(1) => NOMBRE, APELLIDO1, APELLIDO2]
 CALL apoc.load.xls(
