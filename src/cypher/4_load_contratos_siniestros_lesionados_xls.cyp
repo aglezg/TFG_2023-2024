@@ -38,7 +38,7 @@ SET
     p.telefono2 = CASE WHEN row.TELEFONO2 IS NOT NULL THEN row.TELEFONO2 ELSE p.telefono2 END,
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
-    p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
+    p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END,
     p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
     p.numero = row.NUMERO,              // Referencia a lugar
     p.piso = row.PISO,                  // Referencia a lugar
@@ -62,7 +62,7 @@ SET
     p.telefono2 = CASE WHEN row.TELEFONO2 IS NOT NULL THEN row.TELEFONO2 ELSE p.telefono2 END,
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
-    p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
+    p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END,
     p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
     p.numero = row.NUMERO,              // Referencia a lugar
     p.piso = row.PISO,                  // Referencia a lugar
@@ -86,7 +86,7 @@ SET
     p.telefono2 = CASE WHEN row.TELEFONO2 IS NOT NULL THEN row.TELEFONO2 ELSE p.telefono2 END,
     p.movil = CASE WHEN row.MOVIL IS NOT NULL THEN row.MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.FAX IS NOT NULL THEN row.FAX ELSE p.fax END,
-    p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END;
+    p.email = CASE WHEN row.EMAIL IS NOT NULL THEN row.EMAIL ELSE p.email END,
     p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
     p.numero = row.NUMERO,              // Referencia a lugar
     p.piso = row.PISO,                  // Referencia a lugar

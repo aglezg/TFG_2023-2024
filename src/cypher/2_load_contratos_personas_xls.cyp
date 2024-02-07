@@ -5,7 +5,6 @@ MATCH (p:Persona) DETACH DELETE p;
 
 // Remove constraints
 DROP CONSTRAINT Persona_idPersona IF EXISTS;
-DROP CONSTRAINT Municipio_nombreMunicipio IF EXISTS;
 
 // Create Persona constraints
 CREATE CONSTRAINT Persona_idPersona IF NOT EXISTS
@@ -42,21 +41,3 @@ ON CREATE SET
     p.movil = row.MOVIL,
     p.fax = row.FAX,
     p.email = row.EMAIL;
-
-// Create Municipio nodes
-MATCH (p:Persona)
-WHERE p.municipio IS NOT NULL
-MERGE (m:Municipio {nombreMunicipio: p.municipio})
-SET
-    m.provincia = p.provincia;
-
-// Create relationships (Persona-[:VIVE_EN]->Municipio)
-MATCH (p:Persona)
-WHERE p.municipio IS NOT NULL
-MATCH (m:Municipio {nombreMunicipio: p.municipio})
-MERGE (p)-[r:VIVE_EN]->(m)
-SET
-    r.direccion = p.direccion,
-    r.codPostal = p.codPostal
-REMOVE
-    p.municipio, p.provincia, p.direccion, p.codPostal;

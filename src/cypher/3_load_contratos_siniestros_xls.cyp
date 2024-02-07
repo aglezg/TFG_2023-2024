@@ -55,19 +55,3 @@ CALL apoc.load.xls(
 MATCH (p:Poliza {idPoliza: row.ID_POLIZA})          // toInteger(row.ID_POLIZA)
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO}) // toInteger(row.ID_SINIESTRO)
 MERGE (p)-[:TIENE_SINIESTRO]->(s);
-
-// Create municipio nodes
-MATCH (s:Siniestro)
-WHERE s.municipio IS NOT NULL
-MERGE (m:Municipio {nombreMunicipio: s.municipio});
-
-// Create relationships (Siniestro-[:OCURRE_EN]->Municipio)
-MATCH (s:Siniestro)
-WHERE s.municipio IS NOT NULL
-MATCH (m:Municipio {nombreMunicipio: s.municipio})
-MERGE (s)-[r:OCURRE_EN]->(m)
-SET
-    r.viaPublica = s.viaPublica,
-    r.numero = s.numero,
-    r.entidad = s.entidad
-REMOVE s.municipio, s.viaPublica, s.numero, s.entidad;
