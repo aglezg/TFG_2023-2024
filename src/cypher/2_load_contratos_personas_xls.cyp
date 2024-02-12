@@ -11,11 +11,6 @@ CREATE CONSTRAINT Persona_idPersona IF NOT EXISTS
 FOR (p:Persona)
 REQUIRE p.idPersona IS UNIQUE;
 
-// Create Municipio constraints
-CREATE CONSTRAINT Municipio_nombreMunicipio IF NOT EXISTS
-FOR (m:Municipio)
-REQUIRE m.nombreMunicipio IS UNIQUE;
-
 // Create Persona nodes
 CALL apoc.load.xls(
     'file:///CONTRATOS_PERSONAS(simplificado).xlsx', // Version simplificada
