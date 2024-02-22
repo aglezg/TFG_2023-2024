@@ -23,7 +23,7 @@ WHERE row.ID_SINIESTRO IS NOT NULL                  // Error: Hay siniestros nul
 MERGE (s:Siniestro {idSiniestro: row.ID_SINIESTRO}) // toInteger(row.ID_SINIESTRO)
 SET
     s.fchOcurrencia = row.FCH_OCURRENCIA,               
-    s.horaOcurrencia = row.HORA_OCURRENCIA,             
+    s.horaOcurrencia = time(row.HORA_OCURRENCIA),   
     s.fchDeclaracion = row.FCH_DECLARACION,             
     s.responsabilidadCivil = row.RESPONSABILIDAD_CIVIL,
     s.robo = row.ROBO,
