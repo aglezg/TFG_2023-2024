@@ -21,4 +21,6 @@
     RETURN p, p2, s, s2;
 
     // Siniestros que ocurren de madrugada
-    
+    MATCH (s:Siniestro)
+    WHERE time("00:00") <= s.horaOcurrencia <= time("08:00")
+    RETURN s.idSiniestro, s.horaOcurrencia;
