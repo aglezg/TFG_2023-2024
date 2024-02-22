@@ -42,9 +42,9 @@ SET
     p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
     p.numero = row.NUMERO,              // Referencia a lugar
     p.piso = row.PISO,                  // Referencia a lugar
-    p.municipio = row.MUNICIPIO,        // Referencia a lugar
-    p.provincia = row.PROVINCIA,        // Referencia a lugar
-    p.codigoPostal = row.CODIGO_POSTAL; // Referencia a lugar
+    p.municipio = row.MUNICIPIO,        // Referencia a lugar [Eliminada posteriormente]
+    p.provincia = row.PROVINCIA,        // Referencia a lugar [Eliminada posteriormente]
+    p.codPostal = row.CODIGO_POSTAL;    // Referencia a lugar [Eliminada posteriormente]
 
 // Create Persona nodes [(2) => NOMBRE, APELLIDO1]
 CALL apoc.load.xls(
@@ -66,9 +66,9 @@ SET
     p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
     p.numero = row.NUMERO,              // Referencia a lugar
     p.piso = row.PISO,                  // Referencia a lugar
-    p.municipio = row.MUNICIPIO,        // Referencia a lugar
-    p.provincia = row.PROVINCIA,        // Referencia a lugar
-    p.codigoPostal = row.CODIGO_POSTAL; // Referencia a lugar
+    p.municipio = row.MUNICIPIO,        // Referencia a lugar [Eliminada posteriormente]
+    p.provincia = row.PROVINCIA,        // Referencia a lugar [Eliminada posteriormente]
+    p.codPostal = row.CODIGO_POSTAL;    // Referencia a lugar [Eliminada posteriormente]
 
 // Create Persona nodes [(3) => NOMBRE]
 CALL apoc.load.xls(
@@ -90,9 +90,9 @@ SET
     p.viaPublica = row.VIA_PUBLICA,     // Referencia a lugar
     p.numero = row.NUMERO,              // Referencia a lugar
     p.piso = row.PISO,                  // Referencia a lugar
-    p.municipio = row.MUNICIPIO,        // Referencia a lugar
-    p.provincia = row.PROVINCIA,        // Referencia a lugar
-    p.codigoPostal = row.CODIGO_POSTAL; // Referencia a lugar
+    p.municipio = row.MUNICIPIO,        // Referencia a lugar [Eliminada posteriormente]
+    p.provincia = row.PROVINCIA,        // Referencia a lugar [Eliminada posteriormente]
+    p.codPostal = row.CODIGO_POSTAL;    // Referencia a lugar [Eliminada posteriormente]
 
 // Create relationships [ES_LESIONADA_EN] [(1) => NOMBRE, APELLIDO1, APELLIDO2]
 CALL apoc.load.xls(

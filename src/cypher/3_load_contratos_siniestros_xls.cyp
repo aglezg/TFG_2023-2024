@@ -22,9 +22,9 @@ CALL apoc.load.xls(
 WHERE row.ID_SINIESTRO IS NOT NULL                  // Error: Hay siniestros nulos
 MERGE (s:Siniestro {idSiniestro: row.ID_SINIESTRO}) // toInteger(row.ID_SINIESTRO)
 SET
-    s.fchOcurrencia = row.FCH_OCURRENCIA,               // date(row.FCH_OCURRENCIA) error
-    s.horaOcurrencia = row.HORA_OCURRENCIA,             // TIME(row.HORA_OCURRENCIA)
-    s.fchDeclaracion = row.FCH_DECLARACION,             // date(row.FCH_DECLARACION)
+    s.fchOcurrencia = row.FCH_OCURRENCIA,               
+    s.horaOcurrencia = row.HORA_OCURRENCIA,             
+    s.fchDeclaracion = row.FCH_DECLARACION,             
     s.responsabilidadCivil = row.RESPONSABILIDAD_CIVIL,
     s.robo = row.ROBO,
     s.incendio = row.INCENDIO,
@@ -36,12 +36,12 @@ SET
     s.indIntervieneAutoridad = row.IND_INTERVIENE_AUTORIDAD,
     s.indAtestado = row.IND_ATESTADO,
     s.indAlcoholDroga = row.IND_ALCOHOL_DROGA,
-    s.viaPublica = row.VIA_PUBLICA,                       // Referencia a lugar
-    s.numero = row.NUMERO,                                // Referencia a lugar
-    s.entidad = row.ENTIDAD,                              // Referencia a lugar
-    s.municipio = row.MUNICIPIO,                          // Referencia a lugar
-    s.indIndicioFraude = row.IND_INDICIO_FRAUDE,          // toBoolean(row.IND_INDICIO_FRAUDE)
-    s.indFraudeConfirmado = row.IND_FRAUDE_CONFIRMADO,    // toBoolean(row.IND_FRAUDE_CONFIRMADO)
+    s.viaPublica = row.VIA_PUBLICA,                         // Referencia a lugar [Eliminada posteriormente]
+    s.numero = row.NUMERO,                                  // Referencia a lugar [Eliminada posteriormente]
+    s.entidad = row.ENTIDAD,                                // Referencia a lugar [Eliminada posteriormente]
+    s.municipio = row.MUNICIPIO,                            // Referencia a lugar [Eliminada posteriormente]
+    s.indIndicioFraude = row.IND_INDICIO_FRAUDE,          
+    s.indFraudeConfirmado = row.IND_FRAUDE_CONFIRMADO,    
     s.indAsistenciaViaje = row.IND_ASISTENCIA_VIAJE;
 
 // Create relationships (Poliza -> Siniestro)

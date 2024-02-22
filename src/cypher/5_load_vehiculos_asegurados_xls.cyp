@@ -14,8 +14,8 @@ SET
     v.marca = row.MARCA,
     v.modelo = row.MODELO,
     v.tipo = row.TIPO,
-    v.uso = row.USO;
-    // v.indFlota = row.IND_FLOTA;
+    v.uso = row.USO,
+    v.indFlota = row.IND_FLOTA;
 
 // Create Persona nodes [(1) => NOMBRE, APELLIDO1, APELLIDO2]
 CALL apoc.load.xls(
@@ -36,10 +36,10 @@ SET
     p.numero = row.CTOR_NUMERO,             // Referencia a lugar
     p.escalera = row.CTOR_ESCALERA,         // Referencia a lugar
     p.piso = row.CTOR_PISO,                 // Referencia a lugar
-    p.municipio = row.CTOR_MUNICIPIO,       // Referencia a lugar
-    p.provincia = row.CTOR_PROVINCIA,       // Referencia a lugar
+    p.municipio = row.CTOR_MUNICIPIO,       // Referencia a lugar [Eliminada posteriormente]
+    p.provincia = row.CTOR_PROVINCIA,       // Referencia a lugar [Eliminada posteriormente]
     p.entidad = row.CTOR_ENTIDAD,           // Referencia a lugar
-    p.codigoPostal = row.CTOR_COD_POSTAL,   // Referencia a lugar
+    p.codPostal = row.CTOR_COD_POSTAL,      // Referencia a lugar [Eliminada posteriormente]
     p.movil = CASE WHEN row.CTOR_MOVIL IS NOT NULL THEN row.CTOR_MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.CTOR_FAX IS NOT NULL THEN row.CTOR_FAX ELSE p.fax END,
     p.email = CASE WHEN row.CTOR_EMAIL IS NOT NULL THEN row.CTOR_EMAIL ELSE p.email END;
@@ -63,10 +63,10 @@ SET
     p.numero = row.CTOR_NUMERO,             // Referencia a lugar
     p.escalera = row.CTOR_ESCALERA,         // Referencia a lugar
     p.piso = row.CTOR_PISO,                 // Referencia a lugar
-    p.municipio = row.CTOR_MUNICIPIO,       // Referencia a lugar
-    p.provincia = row.CTOR_PROVINCIA,       // Referencia a lugar
+    p.municipio = row.CTOR_MUNICIPIO,       // Referencia a lugar [Eliminada posteriormente]
+    p.provincia = row.CTOR_PROVINCIA,       // Referencia a lugar [Eliminada posteriormente]
     p.entidad = row.CTOR_ENTIDAD,           // Referencia a lugar
-    p.codigoPostal = row.CTOR_COD_POSTAL,   // Referencia a lugar
+    p.codPostal = row.CTOR_COD_POSTAL,      // Referencia a lugar [Eliminada posteriormente]
     p.movil = CASE WHEN row.CTOR_MOVIL IS NOT NULL THEN row.CTOR_MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.CTOR_FAX IS NOT NULL THEN row.CTOR_FAX ELSE p.fax END,
     p.email = CASE WHEN row.CTOR_EMAIL IS NOT NULL THEN row.CTOR_EMAIL ELSE p.email END;
@@ -90,10 +90,10 @@ SET
     p.numero = row.CTOR_NUMERO,             // Referencia a lugar
     p.escalera = row.CTOR_ESCALERA,         // Referencia a lugar
     p.piso = row.CTOR_PISO,                 // Referencia a lugar
-    p.municipio = row.CTOR_MUNICIPIO,       // Referencia a lugar
-    p.provincia = row.CTOR_PROVINCIA,       // Referencia a lugar
+    p.municipio = row.CTOR_MUNICIPIO,       // Referencia a lugar [Eliminada posteriormente]
+    p.provincia = row.CTOR_PROVINCIA,       // Referencia a lugar [Eliminada posteriormente]
     p.entidad = row.CTOR_ENTIDAD,           // Referencia a lugar
-    p.codigoPostal = row.CTOR_COD_POSTAL,   // Referencia a lugar
+    p.codPostal = row.CTOR_COD_POSTAL,      // Referencia a lugar [Eliminada posteriormente]
     p.movil = CASE WHEN row.CTOR_MOVIL IS NOT NULL THEN row.CTOR_MOVIL ELSE p.movil END,
     p.fax = CASE WHEN row.CTOR_FAX IS NOT NULL THEN row.CTOR_FAX ELSE p.fax END,
     p.email = CASE WHEN row.CTOR_EMAIL IS NOT NULL THEN row.CTOR_EMAIL ELSE p.email END;
