@@ -8,6 +8,12 @@
     WHERE Repeticiones > 1
     RETURN matriculaAsegurado, idSiniestro, matriculaContrario, Repeticiones;
 
+  // Lesionados reincidentes: Personas lesionadas en más de 1 siniestro
+  MATCH (p:Persona)-[r:ES_LESIONADA_EN]->(:Siniestro)
+  WITH p.nombre + ' ' + p.apellido1 + ' ' +  p.apellido2 as nombreCompleto, COUNT(r) as numeroDeSiniestrosLesionado
+  WHERE numeroDeSiniestrosLesionado > 1
+  RETURN nombreCompleto, numeroDeSiniestrosLesionado;
+
 // Siniestro nodes
 
   // Reclamación tardía: Siniestros cuya fecha de declaración es mayor a 60 días en comparación a su fecha de ocurrencia
