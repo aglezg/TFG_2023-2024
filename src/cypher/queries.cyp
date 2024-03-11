@@ -4,15 +4,15 @@
 
   // Vehiculos reincidentes: Vehiculo tiene un siniestro con otro vehiculo en más de una ocasión
     MATCH (v1:Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN]->(s:Siniestro)<-[:INTERVIENE_COMO_CONTRARIO_EN]-(v2:Vehiculo)
-    WITH v1.matriculaVehiculo as matriculaAsegurado, s.idSiniestro as idSiniestro, v2.matriculaVehiculo as matriculaContrario, COUNT(*) as Repeticiones
-    WHERE Repeticiones > 1
-    RETURN matriculaAsegurado, idSiniestro, matriculaContrario, Repeticiones;
+    WITH v1.matriculaVehiculo as matriculaVehiculo1, v2.matriculaVehiculo as  matriculaVehiculo2, COUNT(s) as numeroSiniestrosImplicados
+    WHERE numeroSiniestrosImplicados > 1
+    RETURN matriculaVehiculo1, matriculaVehiculo2, numeroSiniestrosImplicados;
 
   // Lesionados reincidentes: Personas lesionadas en más de 1 siniestro
-  MATCH (p:Persona)-[r:ES_LESIONADA_EN]->(:Siniestro)
-  WITH p.nombre + ' ' + p.apellido1 + ' ' +  p.apellido2 as nombreCompleto, COUNT(r) as numeroDeSiniestrosLesionado
-  WHERE numeroDeSiniestrosLesionado > 1
-  RETURN nombreCompleto, numeroDeSiniestrosLesionado;
+    MATCH (p:Persona)-[r:ES_LESIONADA_EN]->(:Siniestro)
+    WITH p.nombre + ' ' + p.apellido1 + ' ' +  p.apellido2 as nombreCompleto, COUNT(r) as numeroDeSiniestrosLesionado
+    WHERE numeroDeSiniestrosLesionado > 1
+    RETURN nombreCompleto, numeroDeSiniestrosLesionado;
 
 // Siniestro nodes
 
