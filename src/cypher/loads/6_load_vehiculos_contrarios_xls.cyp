@@ -8,7 +8,9 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.MATRICULA IS NOT NULL
+WHERE
+    row.MATRICULA IS NOT NULL AND
+    NOT (row.MATRICULA =~ "NA 0*" OR row.MATRICULA =~ "0* SIN")
 MERGE (v:Vehiculo {matriculaVehiculo: row.MATRICULA})
 SET
     v.marca = row.MARCA,

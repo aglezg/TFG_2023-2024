@@ -19,7 +19,9 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.VEHICULO_VIAJA IS NOT NULL
+WHERE
+    row.VEHICULO_VIAJA IS NOT NULL AND
+    NOT (row.VEHICULO_VIAJA =~ "NA 0*" OR row.VEHICULO_VIAJA =~ "0* SIN")
 MERGE (v:Vehiculo {matriculaVehiculo: row.VEHICULO_VIAJA});
 
 // Crear nodos 'Persona' (usando NOMBRE, APELLIDO1, APELLIDO2)
