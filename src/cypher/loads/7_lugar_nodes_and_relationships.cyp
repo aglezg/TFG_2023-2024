@@ -1,29 +1,29 @@
-// Create Lugar nodes and their relationships
+// Crear nodos 'Lugar' y sus relaciones
 
-// Remove nodes
+// Eliminar nodos 'Lugar'
 MATCH (n:Lugar) DETACH DELETE n;
 
-// Remove constraints
+// Eliminar nodos 'Lugar'
 DROP CONSTRAINT Lugar_municipio IF EXISTS;
 
-// Create Lugar constraints
+// Crear las restricciones en nodos 'Lugar'
 CREATE CONSTRAINT Lugar_municipio IF NOT EXISTS
 FOR (l:Lugar)
 REQUIRE l.municipio IS UNIQUE;
 
-// Create Lugar nodes from Persona nodes
+// Crear nodos 'Lugar' a partir de nodos 'Persona'
 MATCH (p:Persona)
 WHERE p.municipio IS NOT NULL
 MERGE (l:Lugar {municipio: p.municipio})
 SET
     l.provincia = p.provincia;
 
-// Create lugar nodes from Siniestro nodes
+// Crear nodos lugar a partir de nodos 'Siniestro'
 MATCH (s:Siniestro)
 WHERE s.municipio IS NOT NULL
 MERGE (l:Lugar {municipio: s.municipio});
 
-// Create relationships (Persona-[:VIVE_EN]->Lugar)
+// Crear relaciones (Persona)-[:VIVE_EN]->(Lugar)
 MATCH (p:Persona)
 WHERE p.municipio IS NOT NULL
 MATCH (l:Lugar {municipio: p.municipio})
@@ -34,7 +34,7 @@ SET
 REMOVE
     p.municipio, p.provincia, p.direccion, p.codPostal;
 
-// Create relationships (Siniestro-[:OCURRE_EN]->Lugar)
+// Crear relaciones (Siniestro)-[:OCURRE_EN]->(Lugar)
 MATCH (s:Siniestro)
 WHERE s.municipio IS NOT NULL
 MATCH (l:Lugar {municipio: s.municipio})

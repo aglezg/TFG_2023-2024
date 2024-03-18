@@ -1,17 +1,17 @@
-// Load CONTRATOS_SINIESTROS_LESIONADOS.xlsx
+// Cargar CONTRATOS_SINIESTROS_LESIONADOS.xlsx
 
-// Remove nodes
+// Eliminar nodos 'Vehiculo'
 MATCH (v:Vehiculo) DETACH DELETE v;
 
-// Remove constraints
+// Eliminar restricciones en nodos 'Vehiculo'
 DROP CONSTRAINT Vehiculo_matriculaVehiculo IF EXISTS;
 
-// Create Vehiculo constraints
+// Crear restricciones en nodos 'Vehiculos'
 CREATE CONSTRAINT Vehiculo_matriculaVehiculo IF NOT EXISTS
 for (v:Vehiculo)
 REQUIRE v.matriculaVehiculo IS UNIQUE;
 
-// Create Vehiculo nodes
+// Crear nodos 'Vehiculo'
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -22,7 +22,7 @@ CALL apoc.load.xls(
 WHERE row.VEHICULO_VIAJA IS NOT NULL
 MERGE (v:Vehiculo {matriculaVehiculo: row.VEHICULO_VIAJA});
 
-// Create Persona nodes [(1) => NOMBRE, APELLIDO1, APELLIDO2]
+// Crear nodos 'Persona' (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -46,7 +46,7 @@ SET
     p.provincia = row.PROVINCIA,        // Referencia a lugar [Eliminada posteriormente]
     p.codPostal = row.CODIGO_POSTAL;    // Referencia a lugar [Eliminada posteriormente]
 
-// Create Persona nodes [(2) => NOMBRE, APELLIDO1]
+// Crear nodos 'Persona' (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -70,7 +70,7 @@ SET
     p.provincia = row.PROVINCIA,        // Referencia a lugar [Eliminada posteriormente]
     p.codPostal = row.CODIGO_POSTAL;    // Referencia a lugar [Eliminada posteriormente]
 
-// Create Persona nodes [(3) => NOMBRE]
+// Crear nodos 'Persona' (usando NOMBRE)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -94,7 +94,7 @@ SET
     p.provincia = row.PROVINCIA,        // Referencia a lugar [Eliminada posteriormente]
     p.codPostal = row.CODIGO_POSTAL;    // Referencia a lugar [Eliminada posteriormente]
 
-// Create relationships [ES_LESIONADA_EN] [(1) => NOMBRE, APELLIDO1, APELLIDO2]
+// Create relationships (Persona)-[ES_LESIONADA_EN]->(Siniestro) (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -109,7 +109,7 @@ MERGE (p)-[r:ES_LESIONADA_EN]->(s)
 SET r.danyos = row.DAÑOS;
 
 
-// Create relationships [ES_LESIONADA_EN] [(2) => NOMBRE, APELLIDO1]
+// Create relationships (Persona)-[ES_LESIONADA_EN]->(Siniestro) (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -123,7 +123,7 @@ MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1}) WHERE p.apellid
 MERGE (p)-[r:ES_LESIONADA_EN]->(s)
 SET r.danyos = row.DAÑOS;
 
-// Create relationships [ES_LESIONADA_EN] [(3) => NOMBRE]
+// Create relationships (Persona)-[ES_LESIONADA_EN]->(Siniestro) (usando NOMBRE)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -137,7 +137,7 @@ MATCH (p:Persona {nombre: row.NOMBRE}) WHERE p.apellido1 IS NULL AND p.apellido2
 MERGE (p)-[r:ES_LESIONADA_EN]->(s)
 SET r.danyos = row.DAÑOS;
 
-// Create relationships [INTERVIENE_EN_SINIESTRO] [(1) => NOMBRE, APELLIDO1, APELLIDO2]
+// Crear relaciones (Persona)-[INTERVIENE_EN_SINIESTRO]->(Siniestro) (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -151,7 +151,7 @@ MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.A
 MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
 SET r.matriculaVehiculo = CASE WHEN row.VEHICULO_VIAJA IS NOT NULL THEN row.VEHICULO_VIAJA ELSE r.matriculaVehiculo END;
 
-// Create relationships [INTERVIENE_EN_SINIESTRO] [(2) => NOMBRE, APELLIDO1]
+// Crear relaciones (Persona)-[INTERVIENE_EN_SINIESTRO]->(Siniestro) (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -165,7 +165,7 @@ MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.A
 MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
 SET r.matriculaVehiculo = CASE WHEN row.VEHICULO_VIAJA IS NOT NULL THEN row.VEHICULO_VIAJA ELSE r.matriculaVehiculo END;
 
-// Create relationships [INTERVIENE_EN_SINIESTRO] [(3) => NOMBRE]
+// Crear relaciones (Persona)-[INTERVIENE_EN_SINIESTRO]->(Siniestro) (usando NOMBRE)
 CALL apoc.load.xls(
     'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
@@ -179,7 +179,8 @@ MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.A
 MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
 SET r.matriculaVehiculo = CASE WHEN row.VEHICULO_VIAJA IS NOT NULL THEN row.VEHICULO_VIAJA ELSE r.matriculaVehiculo END;
 
-// Create relationships [ES_PEATON_EN,CONDUCE_VA_EN, CONDUCE_VC_EN, VIAJA_EN_VA_EN, VIAJA_EN_VC_EN]
+// Crear relaciones (Persona)-[ES_PEATON_EN,CONDUCE_VA_EN, CONDUCE_VC_EN, VIAJA_EN_VA_EN, VIAJA_EN_VC_EN]->(Siniestro)
+// Borrar relaciones anteriores [INTERVIENE_EN_SINIESTRO]
 MATCH (p:Persona)-[r:INTERVIENE_EN_SINIESTRO]->(s:Siniestro)
 WHERE r.rol = "PEATON"
 MERGE (p)-[r2:ES_PEATON_EN]->(s)
@@ -214,12 +215,13 @@ MERGE (p)-[r2:VIAJA_EN_VC_EN]->(s)
 SET r2.matriculaVehiculo = CASE WHEN r.matriculaVehiculo IS NOT NULL THEN r.matriculaVehiculo ELSE NULL END
 DELETE r;
 
-// Create relationships (vehiculo)-[INTERVIENE_COMO_ASEGURADO/CONTRARIO_EN]->(siniestro)
+// Crear relaciones (Vehiculo)-[INTERVIENE_COMO_ASEGURADO|CONTRARIO_EN]->(Siniestro)
 MATCH (p:Persona)-[r:CONDUCE_VA_EN|VIAJA_EN_VA_EN]->(s:Siniestro)
 MATCH (v:Vehiculo)
 WHERE r.matriculaVehiculo = v.matriculaVehiculo
 MERGE (v)-[:INTERVIENE_COMO_ASEGURADO_EN]->(s);
 
+// Crear relaciones (Persona)-[CONDUCE_VC_EN|VIAJA_EN_VC_EN]->(Siniestro)
 MATCH (p:Persona)-[r:CONDUCE_VC_EN|VIAJA_EN_VC_EN]->(s:Siniestro)
 MATCH (v:Vehiculo)
 WHERE r.matriculaVehiculo = v.matriculaVehiculo

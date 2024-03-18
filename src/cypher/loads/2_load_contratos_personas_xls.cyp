@@ -1,17 +1,17 @@
-// Load CONTRATOS_PERSONAS.xlsx
+// Cargar CONTRATOS_PERSONAS.xlsx
 
-// Remove nodes
+// Eliminar nodos 'Persona'
 MATCH (p:Persona) DETACH DELETE p;
 
-// Remove constraints
+// Eliminar restricciones del nodo 'Persona'
 DROP CONSTRAINT Persona_idPersona IF EXISTS;
 
-// Create Persona constraints
+// Crear restricciones en nodos 'Persona'
 CREATE CONSTRAINT Persona_idPersona IF NOT EXISTS
 FOR (p:Persona)
 REQUIRE p.idPersona IS UNIQUE;
 
-// Create Persona nodes
+// Crear nodos 'Persona'
 CALL apoc.load.xls(
     'file:///CONTRATOS_PERSONAS(simplificado).xlsx', // Version simplificada
     'Hoja1',

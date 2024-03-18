@@ -1,6 +1,6 @@
-// Queries to test some cases
+// Sentencias que abarcan ciertos casos relevantes
 
-// Relevant tests
+// Tests más relevantes
 
   // Vehiculos reincidentes: Vehiculo tiene un siniestro con otro vehiculo en más de una ocasión
     MATCH (v1:Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN]->(s:Siniestro)<-[:INTERVIENE_COMO_CONTRARIO_EN]-(v2:Vehiculo)
