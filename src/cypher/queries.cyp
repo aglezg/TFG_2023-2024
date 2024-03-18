@@ -3,7 +3,7 @@
 // Tests más relevantes
 
   // Vehiculos reincidentes: Vehiculo tiene un siniestro con otro vehiculo en más de una ocasión
-    MATCH (v1:Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN]->(s:Siniestro)<-[:INTERVIENE_COMO_CONTRARIO_EN]-(v2:Vehiculo)
+    MATCH (v1:Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN|INTERVIENE_COMO_CONTRARIO_EN]->(s:Siniestro)<-[:INTERVIENE_COMO_ASEGURADO_EN|INTERVIENE_COMO_CONTRARIO_EN]-(v2:Vehiculo)
     WITH v1.matriculaVehiculo as matriculaVehiculo1, v2.matriculaVehiculo as  matriculaVehiculo2, COUNT(s) as numeroSiniestrosImplicados
     WHERE numeroSiniestrosImplicados > 1
     RETURN matriculaVehiculo1, matriculaVehiculo2, numeroSiniestrosImplicados;
