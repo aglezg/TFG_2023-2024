@@ -14,6 +14,12 @@
     WHERE numeroDeSiniestrosLesionado > 1
     RETURN nombreCompleto, numeroDeSiniestrosLesionado;
 
+  // Vehiculos que intervienen en siniestros ocurridos en una misma zona más de 1 vez
+    MATCH (v:Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN|INTERVIENE_COMO_CONTRARIO_EN]->(s:Siniestro)-[:OCURRE_EN]->(l:Lugar)
+    WITH v.matriculaVehiculo as matriculaVehiculo, l.municipio as lugar, COUNT(l) as numeroSiniestros
+    WHERE numeroSiniestros > 1
+    RETURN matriculaVehiculo, lugar, numeroSiniestros;
+
 // Siniestro nodes
 
   // Reclamación tardía: Siniestros cuya fecha de declaración es mayor a 60 días en comparación a su fecha de ocurrencia
