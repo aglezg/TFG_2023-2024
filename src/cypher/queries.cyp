@@ -20,6 +20,23 @@
     WHERE numeroSiniestros > 1
     RETURN matriculaVehiculo, lugar, numeroSiniestros;
 
+  // Personas implicadas en un siniestro que vivan en la misma calle
+    MATCH (siniestro:Siniestro)<-[relacion1]-(persona1:Persona)-[relVive1:VIVE_EN]->(lugar1:Lugar)
+    MATCH (s)<-[relacion2]-(persona2:Persona)-[relVive2:VIVE_EN]->(lugar2:Lugar)
+    WHERE
+         persona1 <> persona2 AND
+         lugar1.municipio = lugar2.municipio AND
+         type(relacion1) CONTAINS 'VA' AND
+         type(relacion2) <> "ES_LESIONADA_EN" AND
+         NOT (type(relacion2) CONTAINS 'VA') // Contemplamos ciclistas, peatones y motoristas
+    RETURN
+         siniestro,
+         persona1,
+         relacion1,
+         persona2,
+         relacion2,
+         lugar1;
+
 // Siniestro nodes
 
   // Reclamación tardía: Siniestros cuya fecha de declaración es mayor a 60 días en comparación a su fecha de ocurrencia
