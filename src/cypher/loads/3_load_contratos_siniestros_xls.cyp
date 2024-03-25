@@ -19,8 +19,8 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.ID_SINIESTRO IS NOT NULL                  // Error: Hay siniestros nulos
-MERGE (s:Siniestro {idSiniestro: row.ID_SINIESTRO}) // toInteger(row.ID_SINIESTRO)
+WHERE row.ID_SINIESTRO IS NOT NULL
+MERGE (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 SET
     s.fchOcurrencia = row.FCH_OCURRENCIA,               
     s.horaOcurrencia = time(row.HORA_OCURRENCIA),   
@@ -52,6 +52,6 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-MATCH (p:Poliza {idPoliza: row.ID_POLIZA})          // toInteger(row.ID_POLIZA)
-MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO}) // toInteger(row.ID_SINIESTRO)
+MATCH (p:Poliza {idPoliza: row.ID_POLIZA})
+MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MERGE (p)-[:TIENE_SINIESTRO]->(s);

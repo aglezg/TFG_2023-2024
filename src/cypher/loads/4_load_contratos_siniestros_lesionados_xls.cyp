@@ -104,7 +104,7 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL // AND row.SINIESTRO IS NOT NULL
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL AND row.ID_SINIESTRO IS NOT NULL
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
 MERGE (p)-[r:ES_LESIONADA_EN]->(s)
@@ -119,7 +119,7 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NULL // AND row.SINIESTRO IS NOT NULL
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NULL AND row.ID_SINIESTRO IS NOT NULL
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1}) WHERE p.apellido2 IS NULL
 MERGE (p)-[r:ES_LESIONADA_EN]->(s)
@@ -133,7 +133,7 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NULL AND row.APELLIDO2 IS NULL // AND row.SINIESTRO IS NOT NULL
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NULL AND row.APELLIDO2 IS NULL AND row.ID_SINIESTRO IS NOT NULL
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE}) WHERE p.apellido1 IS NULL AND p.apellido2 IS NULL
 MERGE (p)-[r:ES_LESIONADA_EN]->(s)
@@ -147,7 +147,7 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL AND row.ROL IS NOT NULL  // AND row.SINIESTRO IS NOT NULL
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL AND row.ROL IS NOT NULL AND row.ID_SINIESTRO IS NOT NULL
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
 MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
@@ -161,7 +161,7 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL AND row.ROL IS NOT NULL  // AND row.SINIESTRO IS NOT NULL
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL AND row.ROL IS NOT NULL AND row.ID_SINIESTRO IS NOT NULL
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
 MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)
@@ -175,7 +175,7 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL AND row.ROL IS NOT NULL  // AND row.SINIESTRO IS NOT NULL
+WHERE row.NOMBRE IS NOT NULL AND row.APELLIDO1 IS NOT NULL AND row.APELLIDO2 IS NOT NULL AND row.ROL IS NOT NULL AND row.ID_SINIESTRO IS NOT NULL
 MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MATCH (p:Persona {nombre: row.NOMBRE, apellido1: row.APELLIDO1, apellido2: row.APELLIDO2})
 MERGE (p)-[r:INTERVIENE_EN_SINIESTRO {rol: row.ROL}]->(s)

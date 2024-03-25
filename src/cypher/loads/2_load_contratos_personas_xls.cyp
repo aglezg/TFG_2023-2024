@@ -19,7 +19,7 @@ CALL apoc.load.xls(
         header: true
     }
 ) YIELD map as row
-MERGE (p:Persona {idPersona: toInteger(row.ID_INTERVINIENTE)})
+MERGE (p:Persona {idPersona: row.ID_INTERVINIENTE})
 ON CREATE SET
     p.nombre = row.NOMBRE,
     p.apellido1 = row.APELLIDO1,
