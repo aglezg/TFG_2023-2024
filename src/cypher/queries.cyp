@@ -36,6 +36,32 @@
          persona2,
          relacion2,
          lugar1;
+  
+  // No tercería: Personas intervinientes en un siniestro que comparten apellidos
+    MATCH (persona1:Persona)-[relacion1]->(siniestro:Siniestro)
+    MATCH (persona2:Persona)-[relacion2]->(siniestro)
+    WITH
+        siniestro.idSiniestro as idSiniestro,
+        persona1.nombre + ' ' + persona1.apellido1 + ' ' + persona1.apellido2 as nombreCompletoPersona1,
+        type(relacion1) as nombreRelacion1,
+        persona2.nombre + ' ' + persona2.apellido1 + ' ' + persona2.apellido2 as nombreCompletoPersona2,
+        type(relacion2) as nombreRelacion2
+    WHERE
+        nombreCompletoPersona1 CONTAINS persona2.apellido1
+        AND
+        nombreCompletoPersona1 CONTAINS persona2.apellido2
+        AND
+        type(relacion1) CONTAINS 'VA'
+        AND
+        type(relacion2) <> 'ES_LESIONADA_EN'
+        AND
+        NOT(type(relacion2) CONTAINS 'VA')
+    RETURN
+        idSiniestro,
+        nombreCompletoPersona1,
+        nombreRelacion1,
+        nombreCompletoPersona2,
+        nombreRelacion2;
 
 // Siniestro nodes
 
