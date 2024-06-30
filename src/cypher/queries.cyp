@@ -1,8 +1,9 @@
-// Sentencias que abarcan ciertos casos relevantes
+// Casos de uso e implementación de consultas
 
-// Tests más relevantes
-
-  // Vehiculos reincidentes: Vehiculo tiene un siniestro con otro vehiculo en más de una ocasión
+  /** 
+   * 1. Vehiculos reincidentes:
+   *    Vehiculos que tienen un siniestro con otro vehiculo en específico en más de una ocasión.
+   **/
     MATCH (v1:Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN|INTERVIENE_COMO_CONTRARIO_EN]->(s:Siniestro)<-[:INTERVIENE_COMO_ASEGURADO_EN|INTERVIENE_COMO_CONTRARIO_EN]-(v2:Vehiculo)
     WITH 
       v1.matriculaVehiculo as matriculaVehiculo1,
@@ -15,7 +16,10 @@
       matriculaVehiculo2,
       numeroSiniestrosImplicados;
 
-  // Lesionados reincidentes: Personas lesionadas en más de 1 siniestro
+  /** 
+   * 2. Lesionados reincidentes:
+   *    Personas que han sido lesionadas en más de 1 siniestro.
+   **/
     MATCH (p:Persona)-[r:ES_LESIONADA_EN]->(:Siniestro)
     WITH 
       p.nombre + ' ' + p.apellido1 + ' ' +  p.apellido2 as nombreCompleto,
@@ -26,7 +30,10 @@
       nombreCompleto,
       numeroDeSiniestrosLesionado;
 
-  // Vehiculos que intervienen en siniestros ocurridos en una misma zona más de 1 vez
+  /** 
+   * 3. Vehículos que participan en siniestros ocurridos en el mismo lugar:
+   *    Vehiculos que intervienen en siniestros ocurridos en una misma zona más de 1 vez.
+   **/
     MATCH (v:Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN|INTERVIENE_COMO_CONTRARIO_EN]->(s:Siniestro)-[:OCURRE_EN]->(l:Lugar)
     WITH
       v.matriculaVehiculo as matriculaVehiculo,
@@ -39,7 +46,10 @@
       lugar,
       numeroSiniestros;
 
-  // Personas implicadas en un siniestro que vivan en la misma calle
+  /** 
+   * 4. Vehículos que participan en siniestros ocurridos en el mismo lugar:
+   *    Vehiculos que intervienen en siniestros ocurridos en una misma zona más de 1 vez.
+   **/
     MATCH (siniestro:Siniestro)<-[relacion1]-(persona1:Persona)-[relVive1:VIVE_EN]->(lugar1:Lugar)
     MATCH (s)<-[relacion2]-(persona2:Persona)-[relVive2:VIVE_EN]->(lugar2:Lugar)
     WHERE
@@ -56,7 +66,10 @@
       relacion2,
       lugar1;
   
-  // No tercería: Personas intervinientes en un siniestro que comparten apellidos
+    /** 
+     * 5. No tercería:
+     *    Personas familiares intervinientes en un siniestro (comparten apellidos).
+     **/
     MATCH (persona1:Persona)-[relacion1]->(siniestro:Siniestro)
     MATCH (persona2:Persona)-[relacion2]->(siniestro)
     WITH
@@ -82,25 +95,20 @@
       nombreCompletoPersona2,
       nombreRelacion2;
 
-// Otros tests
-
-  // Reclamación tardía: Siniestros cuya fecha de declaración es mayor a 60 días en comparación a su fecha de ocurrencia
+    /** 
+     * 6. Reclamación tardía:
+     *    Siniestros cuya fecha de declaración es mayor a 60 días en comparación con su fecha de ocurrencia.
+     **/
     MATCH (s:Siniestro)
     WHERE
       s.fchOcurrencia + Duration({days: 60}) <= s.fchDeclaracion
     RETURN
       s.idSiniestro, s.fchOcurrencia, s.fchDeclaracion
 
-  // Siniestros con igual fecha de ocurrencia dentro de una misma póliza
-    MATCH (p:Poliza)-[:TIENE_SINIESTRO]->(s:Siniestro)
-    MATCH (p2:Poliza)-[:TIENE_SINIESTRO]->(s2:Siniestro)
-    WHERE 
-      p.idPoliza =  p2.idPoliza AND 
-      s.idSiniestro <> s2.idSiniestro AND s.fchOcurrencia = s2.fchOcurrencia
-    RETURN
-      p, p2, s, s2
-  
-  // Siniestros próximos: Siniestros pertenecientes a una misma póliza con fechas de ocurrencia cercanas (30 días)
+    /** 
+     * 7. Siniestros próximos:
+     *    Siniestros pertenecientes a una misma póliza con fechas de ocurrencia cercanas (30 días).
+     **/
     MATCH (p:Poliza)-[:TIENE_SINIESTRO]->(s:Siniestro)
     MATCH (p2:Poliza)-[:TIENE_SINIESTRO]->(s2:Siniestro)
     WHERE 
@@ -110,14 +118,20 @@
     RETURN
       p, p2, s, s2
   
-  // Siniestros que ocurren de madrugada
+    /** 
+     * 8. Siniestros ocurridos de madrugada:
+     *    Siniestros que ocurren entre las 00:00 y las 08:00 horas.
+     **/
     MATCH (s:Siniestro)
     WHERE
       time("00:00") <= s.horaOcurrencia <= time("08:00")
     RETURN 
       s.idSiniestro, s.horaOcurrencia;
   
-  // Exceso de lesionados: siniestros con un número de lesionados mayor a 3
+    /** 
+     * 9. Exceso de lesionados:
+     *    Siniestros que cuentan con un número de lesionados mayor a 3.
+     **/
     MATCH (s:Siniestro)<-[:ES_LESIONADA_EN]-(p:Persona)
     WITH
       s.idSiniestro AS idSiniestro,
@@ -128,7 +142,10 @@
       idSiniestro,
       numLesionados;
 
-  // Jovenes: siniestros en los que intervienen jóvenes (personas de entre 18 y 30 años)
+    /** 
+     * 10. Exceso con jóvenes implicados:
+     *    Siniestros en los que intervienen personas jóvenes (personas de entre 18 y 30 años).
+     **/
     MATCH (p:Persona)-[rel]->(s:Siniestro)
     WITH
       s.idSiniestro as idSiniestro,
@@ -145,20 +162,3 @@
     RETURN
       idSiniestro,
       personas;
-
-  // Lesionados reincidentes: personas lesionadas en más de 1 siniestro
-    MATCH (p:Persona)-[:ES_LESIONADA_EN]->(s:Siniestro)
-    WITH
-     {
-        idPersona: p.idPersona,
-        nombreCompleto: p.nombre + ' ' + p.apellido1 + ' ' + p.apellido2,
-        edad: p.edad
-      } as infoPersona,
-      COUNT(s) as numSiniestros
-    WHERE
-      numSiniestros > 1
-    RETURN
-      infoPersona,
-      numSiniestros;
-
-  // Coincidencia de números telefónicos [to do]
