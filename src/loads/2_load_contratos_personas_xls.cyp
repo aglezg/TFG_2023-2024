@@ -13,7 +13,7 @@ REQUIRE p.idPersona IS UNIQUE;
 
 // Crear nodos 'Persona'
 CALL apoc.load.xls(
-    'file:///CONTRATOS_PERSONAS(simplificado).xlsx', // Version simplificada
+    'file:///2_CONTRATOS_PERSONAS(simplificado).xlsx', // Version simplificada
     'Hoja1',
     {
         header: true

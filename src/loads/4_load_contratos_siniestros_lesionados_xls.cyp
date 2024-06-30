@@ -13,7 +13,7 @@ REQUIRE v.matriculaVehiculo IS UNIQUE;
 
 // Crear nodos 'Vehiculo'
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -26,7 +26,7 @@ MERGE (v:Vehiculo {matriculaVehiculo: row.VEHICULO_VIAJA});
 
 // Crear nodos 'Persona' (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -50,7 +50,7 @@ SET
 
 // Crear nodos 'Persona' (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -74,7 +74,7 @@ SET
 
 // Crear nodos 'Persona' (usando NOMBRE)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -98,7 +98,7 @@ SET
 
 // Create relationships (Persona)-[ES_LESIONADA_EN]->(Siniestro) (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -113,7 +113,7 @@ SET r.danyos = row.DAÑOS;
 
 // Create relationships (Persona)-[ES_LESIONADA_EN]->(Siniestro) (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -127,7 +127,7 @@ SET r.danyos = row.DAÑOS;
 
 // Create relationships (Persona)-[ES_LESIONADA_EN]->(Siniestro) (usando NOMBRE)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -141,7 +141,7 @@ SET r.danyos = row.DAÑOS;
 
 // Crear relaciones (Persona)-[INTERVIENE_EN_SINIESTRO]->(Siniestro) (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -155,7 +155,7 @@ SET r.matriculaVehiculo = CASE WHEN row.VEHICULO_VIAJA IS NOT NULL THEN row.VEHI
 
 // Crear relaciones (Persona)-[INTERVIENE_EN_SINIESTRO]->(Siniestro) (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -169,7 +169,7 @@ SET r.matriculaVehiculo = CASE WHEN row.VEHICULO_VIAJA IS NOT NULL THEN row.VEHI
 
 // Crear relaciones (Persona)-[INTERVIENE_EN_SINIESTRO]->(Siniestro) (usando NOMBRE)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
+    'file:///4_CONTRATOS_SINIESTROS_LESIONADOS.xlsx',
     'Hoja1',
     {
         header: true

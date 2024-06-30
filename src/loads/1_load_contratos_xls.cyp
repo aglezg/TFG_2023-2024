@@ -15,7 +15,7 @@ REQUIRE p.idPoliza IS UNIQUE;
 
 // Crear nodos 'Poliza'
 CALL apoc.load.xls(
-    'file:///CONTRATOS.xlsx',
+    'file:///1_CONTRATOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -31,7 +31,7 @@ REQUIRE a.codAgente IS UNIQUE;
 
 // Crear nodos 'Agente'
 CALL apoc.load.xls(
-    'file:///CONTRATOS.xlsx',
+    'file:///1_CONTRATOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -42,7 +42,7 @@ MERGE (a:Agente {codAgente: row.COD_AGENTE});
 
 // Crear relaciones (Agente)-[:CONTRATADA_POR]->(Poliza)
 CALL apoc.load.xls(
-    'file:///CONTRATOS.xlsx',
+    'file:///1_CONTRATOS.xlsx',
     'Hoja1',
     {
         header: true

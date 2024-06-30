@@ -2,7 +2,7 @@
 
 // Crear nodos 'Vehiculo'
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
+    'file:///6_CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -21,7 +21,7 @@ SET
 
 // Crear nodos 'Persona' (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
+    'file:///6_CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -48,7 +48,7 @@ SET
 
 // Crear nodos 'Persona' (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
+    'file:///6_CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -75,7 +75,7 @@ SET
 
 // Crear nodos 'Persona' (usando NOMBRE)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
+    'file:///6_CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -102,7 +102,7 @@ SET
 
 // Crear relaciones (Vehiculo)-[:INTERVIENE_COMO_CONTRARIO_EN]->(Siniestro)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
+    'file:///6_CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -116,7 +116,7 @@ SET r.danyos = row.DANYOS;
 
 // Crear relaciones (Persona)-[:CONDUCE_VC_EN]->(Siniestro) (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
+    'file:///6_CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -130,7 +130,7 @@ SET r.matriculaVehiculo = CASE WHEN row.MATRICULA IS NOT NULL THEN row.MATRICULA
 
 // Crear relaciones (Persona)-[:CONDUCE_VC_EN]->(Siniestro) (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
+    'file:///6_CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
     'Hoja1',
     {
         header: true
@@ -144,7 +144,7 @@ SET r.matriculaVehiculo = CASE WHEN row.MATRICULA IS NOT NULL THEN row.MATRICULA
 
 // Crear relaciones (Persona)-[:CONDUCE_VC_EN]->(Siniestro) (usando NOMBRE)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
+    'file:///6_CONTRATOS_SINIESTROS_VEHICULOS_CONTRARIOS.xlsx',
     'Hoja1',
     {
         header: true

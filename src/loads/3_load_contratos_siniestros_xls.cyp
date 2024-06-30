@@ -13,7 +13,7 @@ REQUIRE s.idSiniestro IS UNIQUE;
 
 // Crear nodos 'Siniestro'
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS.xlsx',
+    'file:///3_CONTRATOS_SINIESTROS.xlsx',
     'Hoja1',
     {
         header: true
@@ -46,7 +46,7 @@ SET
 
 // Crear relaciones (Poliza)-[:TIENE_SINIESTRO]->(Siniestro)
 CALL apoc.load.xls(
-    'file:///CONTRATOS_SINIESTROS.xlsx',
+    'file:///3_CONTRATOS_SINIESTROS.xlsx',
     'Hoja1',
     {
         header: true
