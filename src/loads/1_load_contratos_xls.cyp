@@ -1,4 +1,4 @@
-// Carga de CONTRATOS.xlsx
+// 1. Carga de CONTRATOS.xlsx
 
 // Eliminar nodos 'Poliza' y 'Agente'
 MATCH (p:Poliza) DETACH DELETE p;

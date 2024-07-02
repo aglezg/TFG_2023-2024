@@ -1,4 +1,4 @@
-// Crear nodos 'Lugar' y sus relaciones
+// 7. Crear nodos 'Lugar' y sus relaciones
 
 // Eliminar nodos 'Lugar'
 MATCH (n:Lugar) DETACH DELETE n;

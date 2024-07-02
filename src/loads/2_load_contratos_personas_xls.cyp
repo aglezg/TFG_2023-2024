@@ -1,4 +1,4 @@
-// Cargar CONTRATOS_PERSONAS.xlsx
+// 2. Cargar CONTRATOS_PERSONAS.xlsx
 
 // Eliminar nodos 'Persona'
 MATCH (p:Persona) DETACH DELETE p;

@@ -1,4 +1,4 @@
-// Cargar CONTRATOS_SINIESTROS_LESIONADOS.xlsx
+// 4. Cargar CONTRATOS_SINIESTROS_LESIONADOS.xlsx
 
 // Eliminar nodos 'Vehiculo'
 MATCH (v:Vehiculo) DETACH DELETE v;

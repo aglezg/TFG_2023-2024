@@ -1,4 +1,4 @@
-// Cargar CONTRATOS_SINIESTROS.xlsx
+// 3. Cargar CONTRATOS_SINIESTROS.xlsx
 
 // Eliminar nodos 'Siniestro'
 MATCH (s:Siniestro) DETACH DELETE s;
