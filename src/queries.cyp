@@ -103,7 +103,7 @@ MATCH (s:Siniestro)
 WHERE
   s.fchOcurrencia + Duration({days: 60}) <= s.fchDeclaracion
 RETURN
-  s.idSiniestro, s.fchOcurrencia, s.fchDeclaracion
+  s.idSiniestro, s.fchOcurrencia, s.fchDeclaracion;
 
 /** 
  * 7. Siniestros próximos:
@@ -116,7 +116,7 @@ WHERE
   s.idSiniestro <> s2.idSiniestro AND
   s2.fchOcurrencia - Duration({days: 30}) < s.fchOcurrencia < s2.fchOcurrencia + Duration({days: 30})
 RETURN
-  p, p2, s, s2
+  p, p2, s, s2;
 
 /** 
  * 8. Siniestros ocurridos de madrugada:
