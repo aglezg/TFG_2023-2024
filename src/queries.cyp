@@ -47,8 +47,8 @@ RETURN
   numeroSiniestros;
 
 /** 
- * 4. Vehículos que participan en siniestros ocurridos en el mismo lugar:
- *    Vehiculos que intervienen en siniestros ocurridos en una misma zona más de 1 vez.
+ * 4. Personas partícipes de un siniestro residentes en la misma localidad:
+ *    Personas intervinientes en un siniestro y aparentemente desconocidos entre si que viven en el mismo lugar.
  **/
 MATCH (siniestro:Siniestro)<-[relacion1]-(persona1:Persona)-[relVive1:VIVE_EN]->(lugar1:Lugar)
 MATCH (s)<-[relacion2]-(persona2:Persona)-[relVive2:VIVE_EN]->(lugar2:Lugar)
@@ -143,7 +143,7 @@ RETURN
   numLesionados;
 
 /** 
- * 10. Siniestros con jóvenes implicados:
+ * 10. Exceso de jóvenes implicados:
  *    Siniestros en los que intervienen personas jóvenes (personas de entre 18 y 30 años).
  **/
 MATCH (p:Persona)-[rel]->(s:Siniestro)
