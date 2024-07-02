@@ -143,7 +143,7 @@ RETURN
   numLesionados;
 
 /** 
- * 10. Exceso con jóvenes implicados:
+ * 10. Siniestros con jóvenes implicados:
  *    Siniestros en los que intervienen personas jóvenes (personas de entre 18 y 30 años).
  **/
 MATCH (p:Persona)-[rel]->(s:Siniestro)
