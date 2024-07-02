@@ -1,6 +1,6 @@
 // 5. Cargar CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xslx
 
-// Crear nodos 'Vehiculo'
+// 5.1 Crear nodos 'Vehiculo'
 CALL apoc.load.xls(
     'file:///5_CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
@@ -19,7 +19,7 @@ SET
     v.uso = row.USO,
     v.indFlota = row.IND_FLOTA;
 
-// Crear nodos 'Persona' (usando NOMBRE, APELLIDO1, APELLIDO2)
+// 5.2 Crear nodos 'Persona' (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
     'file:///5_CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
@@ -46,7 +46,7 @@ SET
     p.fax = CASE WHEN row.CTOR_FAX IS NOT NULL THEN row.CTOR_FAX ELSE p.fax END,
     p.email = CASE WHEN row.CTOR_EMAIL IS NOT NULL THEN row.CTOR_EMAIL ELSE p.email END;
 
-// Crear nodos 'Persona' (usando NOMBRE, APELLIDO1)
+// 5.3 Crear nodos 'Persona' (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
     'file:///5_CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
@@ -73,7 +73,7 @@ SET
     p.fax = CASE WHEN row.CTOR_FAX IS NOT NULL THEN row.CTOR_FAX ELSE p.fax END,
     p.email = CASE WHEN row.CTOR_EMAIL IS NOT NULL THEN row.CTOR_EMAIL ELSE p.email END;
 
-// Crear nodos 'Persona' (usando NOMBRE)
+// 5.4 Crear nodos 'Persona' (usando NOMBRE)
 CALL apoc.load.xls(
     'file:///5_CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
@@ -100,7 +100,7 @@ SET
     p.fax = CASE WHEN row.CTOR_FAX IS NOT NULL THEN row.CTOR_FAX ELSE p.fax END,
     p.email = CASE WHEN row.CTOR_EMAIL IS NOT NULL THEN row.CTOR_EMAIL ELSE p.email END;
 
-// Crear relaciones (Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN]->(Siniestro)
+// 5.5 Crear relaciones (Vehiculo)-[:INTERVIENE_COMO_ASEGURADO_EN]->(Siniestro)
 CALL apoc.load.xls(
     'file:///5_CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
@@ -114,7 +114,7 @@ MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MERGE (v)-[r:INTERVIENE_COMO_ASEGURADO_EN]->(s)
 SET r.danyos = row.DANYOS;
 
-// Crear relaciones (Persona)-[:CONDUCE_VA_EN]->(Siniestro) (usando NOMBRE, APELLIDO1, APELLIDO2)
+// 5.6 Crear relaciones (Persona)-[:CONDUCE_VA_EN]->(Siniestro) (usando NOMBRE, APELLIDO1, APELLIDO2)
 CALL apoc.load.xls(
     'file:///5_CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
@@ -128,7 +128,7 @@ MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MERGE (p)-[r:CONDUCE_VA_EN]->(s)
 SET r.matriculaVehiculo = CASE WHEN row.MATRICULA IS NOT NULL THEN row.MATRICULA ELSE r.matriculaVehiculo END;
 
-// Crear relaciones (Persona)-[:CONDUCE_VA_EN]->(Siniestro) (usando NOMBRE, APELLIDO1)
+// 5.7 Crear relaciones (Persona)-[:CONDUCE_VA_EN]->(Siniestro) (usando NOMBRE, APELLIDO1)
 CALL apoc.load.xls(
     'file:///5_CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',
@@ -142,7 +142,7 @@ MATCH (s:Siniestro {idSiniestro: row.ID_SINIESTRO})
 MERGE (p)-[r:CONDUCE_VA_EN]->(s)
 SET r.matriculaVehiculo = CASE WHEN row.MATRICULA IS NOT NULL THEN row.MATRICULA ELSE r.matriculaVehiculo END;
 
-// Crear relaciones (Persona)-[:CONDUCE_VA_EN]->(Siniestro) (usando NOMBRE)
+// 5.8 Crear relaciones (Persona)-[:CONDUCE_VA_EN]->(Siniestro) (usando NOMBRE)
 CALL apoc.load.xls(
     'file:///5_CONTRATOS_SINIESTROS_VEHICULOS_ASEGURADOS.xlsx',
     'Hoja1',

@@ -1,19 +1,19 @@
 // 1. Carga de CONTRATOS.xlsx
 
-// Eliminar nodos 'Poliza' y 'Agente'
+// 1.1 Eliminar nodos 'Poliza' y 'Agente'
 MATCH (p:Poliza) DETACH DELETE p;
 MATCH (a:Agente) DETACH DELETE a;
 
-// Eliminar restricciones en nodos 'Poliza' y 'Agente'
+// 1.2 Eliminar restricciones en nodos 'Poliza' y 'Agente'
 DROP CONSTRAINT Poliza_idPoliza IF EXISTS;
 DROP CONSTRAINT Agente_codAgente IF EXISTS;
 
-// Crear restricciones en nodos 'Poliza'
+// 1.3 Crear restricciones en nodos 'Poliza'
 CREATE CONSTRAINT Poliza_idPoliza IF NOT EXISTS
 FOR (p:Poliza)
 REQUIRE p.idPoliza IS UNIQUE;
 
-// Crear nodos 'Poliza'
+// 1.4 Crear nodos 'Poliza'
 CALL apoc.load.xls(
     'file:///1_CONTRATOS.xlsx',
     'Hoja1',
@@ -24,12 +24,12 @@ CALL apoc.load.xls(
 WHERE row.ID_POLIZA IS NOT NULL
 MERGE (p:Poliza {idPoliza: row.ID_POLIZA});
 
-// Crear restricciones en nodos 'Agente'
+// 1.5 Crear restricciones en nodos 'Agente'
 CREATE CONSTRAINT Agente_codAgente IF NOT EXISTS
 FOR (a:Agente)
 REQUIRE a.codAgente IS UNIQUE;
 
-// Crear nodos 'Agente'
+// 1.6 Crear nodos 'Agente'
 CALL apoc.load.xls(
     'file:///1_CONTRATOS.xlsx',
     'Hoja1',
@@ -40,7 +40,7 @@ CALL apoc.load.xls(
 WHERE row.COD_AGENTE IS NOT NULL
 MERGE (a:Agente {codAgente: row.COD_AGENTE});
 
-// Crear relaciones (Agente)-[:CONTRATADA_POR]->(Poliza)
+// 1.7 Crear relaciones (Agente)-[:CONTRATADA_POR]->(Poliza)
 CALL apoc.load.xls(
     'file:///1_CONTRATOS.xlsx',
     'Hoja1',

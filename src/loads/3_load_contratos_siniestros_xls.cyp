@@ -1,17 +1,17 @@
 // 3. Cargar CONTRATOS_SINIESTROS.xlsx
 
-// Eliminar nodos 'Siniestro'
+// 3.1 Eliminar nodos 'Siniestro'
 MATCH (s:Siniestro) DETACH DELETE s;
 
-// Eliminar restricciones en nodos 'Siniestro'
+// 3.2 Eliminar restricciones en nodos 'Siniestro'
 DROP CONSTRAINT Siniestro_idSiniestro IF EXISTS;
 
-// Crear restricciones en nodos 'Siniestro'
+// 3.3 Crear restricciones en nodos 'Siniestro'
 CREATE CONSTRAINT Siniestro_idSiniestro IF NOT EXISTS
 FOR (s:Siniestro)
 REQUIRE s.idSiniestro IS UNIQUE;
 
-// Crear nodos 'Siniestro'
+// 3.4 Crear nodos 'Siniestro'
 CALL apoc.load.xls(
     'file:///3_CONTRATOS_SINIESTROS.xlsx',
     'Hoja1',
@@ -44,7 +44,7 @@ SET
     s.indFraudeConfirmado = row.IND_FRAUDE_CONFIRMADO,    
     s.indAsistenciaViaje = row.IND_ASISTENCIA_VIAJE;
 
-// Crear relaciones (Poliza)-[:TIENE_SINIESTRO]->(Siniestro)
+// 3.5 Crear relaciones (Poliza)-[:TIENE_SINIESTRO]->(Siniestro)
 CALL apoc.load.xls(
     'file:///3_CONTRATOS_SINIESTROS.xlsx',
     'Hoja1',
