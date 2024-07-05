@@ -40,7 +40,7 @@ CALL apoc.load.xls(
 WHERE row.COD_AGENTE IS NOT NULL
 MERGE (a:Agente {codAgente: row.COD_AGENTE});
 
-// 1.7 Crear relaciones (Agente)-[:CONTRATADA_POR]->(Poliza)
+// 1.7 Crear relaciones (Poliza)-[:CONTRATADA_POR]->(Agente)
 CALL apoc.load.xls(
     'file:///1_CONTRATOS.xlsx',
     'Hoja1',
