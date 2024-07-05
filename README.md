@@ -11,6 +11,6 @@
 - **Identificador universitario**: alu0101321219
 
 ## Acerca de este repositorio
-En el directorio denominado ```src```encontramos las siguientes subcarpetas:
+En el directorio denominado ```src``` encontramos las siguientes subcarpetas:
 - ```loads```: Contiene los _scripts_ de carga y transformación de datos que convierten el modelo de base de datos relacional importado a un modelo de base de datos orientado a grafos. 
 - ```queries```: Contiene _scripts_ en los que se realizan consultas a la base de datos creada con el objetivo de obtener resultados acerca de diversos casos de uso. 
