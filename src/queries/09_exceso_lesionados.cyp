@@ -10,4 +10,6 @@ WHERE
   numLesionados > 3
 RETURN
   idSiniestro,
-  numLesionados;
+  numLesionados
+ORDER BY
+  numLesionados DESC;
